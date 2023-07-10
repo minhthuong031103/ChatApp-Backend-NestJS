@@ -1,6 +1,10 @@
 import { Body, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { IUserServices } from "./user";
-import { CreateUserDetail } from "src/utils/types";
+import {
+  CreateUserDetail,
+  FindUserOptions,
+  FindUserParams,
+} from "src/utils/types";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "src/utils/typeorm";
 import { Repository } from "typeorm";
@@ -23,5 +27,15 @@ export class UserService implements IUserServices {
     const newUser = this.userRepository.create({ ...userDetails, password });
 
     return this.userRepository.save(newUser);
+  }
+  async findUser(
+    findUserParams: FindUserParams,
+    findUserOptions: FindUserOptions
+  ) {
+    const user = await this.userRepository.findOneBy(findUserParams);
+    if (!user) {
+      throw new HttpException("User not found", HttpStatus.NOT_FOUND);
+    }
+    return user;
   }
 }

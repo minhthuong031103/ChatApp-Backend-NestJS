@@ -1,3 +1,5 @@
+import { User } from "src/utils/typeorm";
+import { ValidateUserDetails } from "src/utils/types";
 export interface IAuthServices {
-  validateUser();
+  validateUser(userCredentials: ValidateUserDetails): Promise<User | null>;
 }
