@@ -8,6 +8,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import entities from "./utils/typeorm";
 import { PassportModule } from "@nestjs/passport";
 import { DatabaseModule } from "./database/database.module";
+import { ConversationModule } from './conversation/conversation.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,6 +17,7 @@ import { DatabaseModule } from "./database/database.module";
     PassportModule.register({ session: true }),
     AuthModule,
     UserModule,
+    ConversationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
