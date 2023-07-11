@@ -1,4 +1,10 @@
-import { Body, HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import {
+  Body,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from "@nestjs/common";
 import { IUserServices } from "./user";
 import {
   CreateUserDetail,
@@ -13,7 +19,7 @@ import { hashPassword } from "src/utils/typeorm/helper";
 @Injectable()
 export class UserService implements IUserServices {
   constructor(
-    @InjectRepository(User)
+    @Inject("USER_REPOSITORY")
     private readonly userRepository: Repository<User>
   ) {}
   async createUser(userDetails: CreateUserDetail) {

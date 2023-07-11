@@ -5,8 +5,15 @@ import { AppModule } from "./app.module";
 import { ValidationPipe } from "@nestjs/common";
 import * as session from "express-session";
 import * as passport from "passport";
+import { DataSource } from "typeorm";
+import { TypeormStore } from "connect-typeorm";
+import { Session } from "./utils/typeorm";
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const dataSource: DataSource = app.get<DataSource>("DATA_SOURCE");
+  const sessionRepository = dataSource.getRepository(Session);
+  console.log(sessionRepository);
   const { PORT, COOKIE_SECRET } = process.env; //PORT 3001 env
   app.setGlobalPrefix("api"); //set global prefix (api)
   app.useGlobalPipes(new ValidationPipe());
@@ -19,6 +26,7 @@ async function bootstrap() {
       cookie: {
         maxAge: 86400000,
       },
+      store: new TypeormStore().connect(sessionRepository),
     })
   );
   app.use(passport.initialize());
