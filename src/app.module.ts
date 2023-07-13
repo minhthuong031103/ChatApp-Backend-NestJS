@@ -9,6 +9,7 @@ import entities from "./utils/typeorm";
 import { PassportModule } from "@nestjs/passport";
 import { DatabaseModule } from "./database/database.module";
 import { ConversationModule } from './conversation/conversation.module';
+import { ParticipantModule } from './participant/participant.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,6 +19,7 @@ import { ConversationModule } from './conversation/conversation.module';
     AuthModule,
     UserModule,
     ConversationModule,
+    ParticipantModule,
   ],
   controllers: [AppController],
   providers: [AppService],

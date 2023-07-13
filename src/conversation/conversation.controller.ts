@@ -4,6 +4,8 @@ import { IConversationService } from "./conversation";
 import { AuthenticatedGuard } from "src/auth/utils/Guard";
 import { create } from "domain";
 import { CreateConversationDto } from "./dtos/CreateConversationDto";
+import { AuthUser } from "src/utils/decorators";
+import { User } from "src/utils/typeorm";
 
 @Controller(Routes.CONVERSATION)
 export class ConversationController {
@@ -13,7 +15,11 @@ export class ConversationController {
   ) {}
   @Post()
   @UseGuards(AuthenticatedGuard)
-  createConversation(@Body() createConversationDto: CreateConversationDto) {
+  createConversation(
+    @Body() createConversationDto: CreateConversationDto,
+    @AuthUser() user: User
+  ) {
+    console.log(user);
     return this.conversationService.createConversation(
       {
         email: "cc",
